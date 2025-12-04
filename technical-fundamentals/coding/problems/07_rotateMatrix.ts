@@ -6,5 +6,13 @@
 type Matrix = number[][]
 
 export default function rotateMatrix (matrix: Matrix) {
-
+    for (let row = 0; row < matrix.length; row++) {
+        for (let col = row + 1; col < matrix.length; col++) {
+            const temp = matrix[row][col]
+            matrix[row][col] = matrix[col][row]
+            matrix[col][row] = temp
+        }
+    }
+    matrix.forEach(row => row.reverse())
+    return
 }

@@ -10,5 +10,13 @@
 // ```
 
 export default function palindromePermutation (str: string): boolean {
-
+    const clean = str.toLowerCase().replaceAll(' ', '')
+    const hash: Record<string, number> = {}
+    for (let char of clean) {
+        if (!hash[char]) {
+            hash[char] = 0
+        }
+        hash[char]++
+    }
+    return Object.values(hash).filter(el => el % 2 !== 0).length <= 1
 }

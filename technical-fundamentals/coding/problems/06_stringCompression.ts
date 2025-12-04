@@ -7,5 +7,17 @@
 // You can assume the string has only uppercase and lowercase letters (a - z).
 
 export default function stringCompression (str: string) : string {
- 
+    let compression = ''
+    let char = str[0]
+    let number = 1
+    for (let i = 1; i < str.length; i++) {
+        if(str[i] !== char) {
+            compression += `${char}${number}`
+            char = str[i]
+            number = 0
+        }
+        number++
+    }
+    compression += `${char}${number}`
+    return str.length < compression.length ? str : compression
 }
