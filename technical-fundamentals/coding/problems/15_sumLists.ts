@@ -19,4 +19,23 @@ export type Node<T> = {
 export default function sumLists(
   list1: Node<number> | undefined,
   list2: Node<number> | undefined,
-): Node<number> | undefined {}
+): Node<number> | undefined {
+  let power = 1
+  const one = new LinkedList(list1)
+  let numberOne = 0
+  one.visit(node => {
+    numberOne += node.value * power
+    power *= 10
+  })
+  const two = new LinkedList(list2)
+  let numberTwo = 0
+  power = 1
+  two.visit(node => {
+    numberTwo += node.value * power
+    power *= 10
+  })
+  let sum = numberOne + numberTwo
+  const result: LinkedList<number> = new LinkedList()
+  String(sum).split('').reverse().forEach(n => result.push(Number(n)))
+  return result.head
+}

@@ -16,4 +16,27 @@ export type Node<T> = {
 export default function sumListsForwardOrder(
   list1: Node<number> | undefined,
   list2: Node<number> | undefined,
-): Node<number> | undefined {}
+): Node<number> | undefined {
+  if (!list1 && !list2) { return }
+  
+  const one = new LinkedList(list1)
+  let power = Math.pow(10, one.length() - 1) 
+  let numberOne = 0
+  one.visit(node => {
+    numberOne += node.value * power
+    power /= 10
+  })
+
+  const two = new LinkedList(list2)
+  let numberTwo = 0
+  power = Math.pow(10, two.length() - 1)
+  two.visit(node => {
+    numberTwo += node.value * power
+    power /= 10
+  })
+
+  let sum = numberOne + numberTwo
+  const result: LinkedList<number> = new LinkedList()
+  String(sum).split('').forEach(n => result.push(Number(n)))
+  return result.head
+}
