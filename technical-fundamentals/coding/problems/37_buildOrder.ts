@@ -14,5 +14,40 @@
 // ```
 
 export default function buildOrder(projects: string[], dependencies: string[][]): string[] | string {
+    if (projects.length === 0) return []
+
+    const map: Map<string, Set<string>> = new Map()
+    for (let p of projects) {
+        map.set(p, new Set())
+    }
+    for (let [dependOf, project] of dependencies) {
+        const pDeps = map.get(project)
+        pDeps?.add(dependOf)
+    }
+    const finished = []
+    console.log(map)
+    while(finished.length < projects.length) {
+        const toAdd = []
+        for (const[_, d] of map) {
+            for (let f of finished) {
+                d.delete(f)
+            }
+        }
+        for (const [p, d] of map) {
+            if (!d.size && finished.indexOf(p) === -1) {
+                toAdd.push(p)
+            }
+        }
+        // console.log(toAdd, finished)
+        if (toAdd.length === 0) {
+            console.log('entra al if pero no tira el error')
+            throw new Error("No valid build order exists");
+            // return []
+            
+        }
+        finished.push(...toAdd)
+    }
+
+    return finished
 
 }

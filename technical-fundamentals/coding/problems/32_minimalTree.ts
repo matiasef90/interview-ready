@@ -22,4 +22,18 @@ export type TreeNode<T> = {
 
 export default function minimalTree<T>(
   sortedArray: T[],
-): TreeNode<T> | undefined {}
+): TreeNode<T> | undefined {
+  if (!sortedArray.length) { return }
+  if (sortedArray.length === 1) {
+    return { value: sortedArray[0] }
+  }
+  const mid = Math.floor(sortedArray.length / 2)
+  const left = sortedArray.slice(0, mid)
+  const right = sortedArray.slice(mid + 1)
+  
+  return {
+    value: sortedArray[mid],
+    left: minimalTree(left),
+    right: minimalTree(right)
+  }
+}

@@ -12,5 +12,21 @@ export type TreeNode<T> = {
 };
 
 export default function successor<T>(node: TreeNode<T>): TreeNode<T> | undefined {
-    
+    if (!node) return
+    let right = node.right
+    while(right) {
+        if (right.left) {
+            right = right.left
+            continue
+        }
+        return right
+    }
+    let parent = node.parent
+    while(parent) {
+        if (parent.value > node.value) {
+            return parent
+        }
+        parent = parent.parent
+    }
+    return
 }

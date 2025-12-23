@@ -17,4 +17,28 @@ export type ListNode<T> = {
 
 export default function listOfDepths<T>(
   root: TreeNode<T> | null,
-): ListNode<T>[] {}
+): ListNode<T>[] {
+  const lists: ListNode<T>[] = []
+  if (!root) { return lists }
+  function createLists(root: TreeNode<T>, floor: number = 0) {
+    if (!root) { return }
+    if (!lists[floor]) {
+      lists[floor] = {value: root.value }
+    } else {
+      let p = lists[floor]
+      while(p) {
+        if (!p.next) {
+          p.next = {value: root.value}
+          break
+        }
+        p = p.next
+      }
+    }
+    if (root.left) { createLists(root.left, floor + 1)}
+    if (root.right) { createLists(root.right, floor + 1)}
+  }
+  
+  createLists(root, 0)
+
+  return lists
+}

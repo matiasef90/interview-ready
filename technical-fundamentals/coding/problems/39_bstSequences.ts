@@ -17,4 +17,29 @@ export type TreeNode<T> = {
   right?: TreeNode<T>;
 };
 
-export default function bstSequences<T>(root: TreeNode<T>): T[][] {}
+export default function bstSequences<T>(root: TreeNode<T> | undefined): T[][] {
+  if (!root) return [[]]
+  const result: T[][] = []
+  const left = bstSequences(root.left)
+  const right = bstSequences(root.right)
+  for (let l of left) {
+    for (let r of right) {
+      weaver(l, r, [root.value], result)
+    }
+  }
+
+  return result
+}
+
+
+function weaver<T>(left: T[], right: T[], prefix: T[], sequences: T[][]) {
+  if (left.length === 0 || right.length === 0) {
+    sequences.push(prefix.concat(left, right))
+    return
+  }
+  const [firstLeft, ...restLeft] = left
+  weaver(restLeft, right, [...prefix, firstLeft], sequences)
+  
+  const [firstRight, ...restRight] = right
+  weaver(left, restRight, [...prefix, firstRight], sequences)
+}
