@@ -13,4 +13,19 @@ Explanation: there are four ways to make up the amount:
 
 */
 
-export function coinChange(amount: number, coins: Array<number>): number {}
+export function coinChange(amount: number, coins: Array<number>): number {
+    const set: Set<string> = new Set()
+    findOptions(amount, coins, [], set)
+    return set.size
+}
+
+function findOptions(amount: number, coins: number[], option: number[], set: Set<string>) {
+    if (amount === 0) {
+        set.add(option.join(''))
+        return
+    }
+    if (amount < 0) return
+    for (let coin of coins) {
+        findOptions(amount - coin, coins, [...option, coin].sort(), set)
+    }
+}

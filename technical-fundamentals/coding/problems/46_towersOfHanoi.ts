@@ -13,4 +13,34 @@
 
 type Tower = number[];
 
-export function towersOfHanoi(n: number): [Tower, Tower, Tower] {}
+export function towersOfHanoi(n: number): [Tower, Tower, Tower] {
+    const t1: Tower = Array(n).fill(0)
+        .map((_, i) => i + 1)
+        .reverse()
+    const t2: Tower = []
+    const t3: Tower = []
+    console.log('dddd', t1)
+    hanoi(n, t1, t2, t3)
+    return [t1, t2, t3]
+}
+
+function hanoi(n: number, t1: Tower, t2: Tower, t3: Tower) {
+    if (n === 1) {
+        const value = t1.pop()
+        if (value) t3.push(value)
+        return
+    }
+    if (n === 2) {
+        let value = t1.pop()
+        if (value) t2.push(value)
+        value = t1.pop()
+        if (value) t3.push(value)
+        value = t2.pop()
+        if (value) t3.push(value)
+        return
+    }
+    hanoi(n - 1, t1, t3, t2)
+    const value = t1.pop()
+    if (value) t3.push(value)
+    hanoi(n - 1, t2, t1, t3)
+}

@@ -17,6 +17,9 @@ describe("magic index", () => {
       expect(
         findMagicIndexNonDistinct([-10, -5, 2, 2, 2, 2, 4, 7, 9, 12, 13]),
       ).toBe(2); // Magic index: 2
+      expect(
+        findMagicIndexNonDistinct([-10, -5, 1, 2, 2, 2, 4, 9, 9, 9, 13]),
+      ).toBe(9); // Magic index: 2
 
       // Test case where no magic index exists
       expect(

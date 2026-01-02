@@ -8,5 +8,16 @@
 
 
 export function powerSet(set: number[]): number[][] {
+    return getSets(set)
+    
+}
 
+function getSets(set: number[], sets: number[][] = [[]]): number[][] {
+    if (set.length === 0) return sets
+    const [value, ...rest] = set
+    const aux: number[][] = []
+    for (let i= 0; i < sets.length; i++) {
+        aux.push([...sets[i], value])
+    }
+    return getSets(rest, [...sets, ...aux])
 }
